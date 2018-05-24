@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -70,6 +71,7 @@ public class Search extends Fragment {
         searchResultRecyclerView = view.findViewById(R.id.searchResultRecyclerView);
 
         searchResultRecyclerView.setLayoutManager(new LinearLayoutManager(SuperVariables._MainActivity));
+        ((SimpleItemAnimator) searchResultRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         Query query = SuperVariables._AppFirebase.getUsersDatabase();
         firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<UsersModel>()
@@ -162,7 +164,7 @@ public class Search extends Fragment {
         SuperVariables._AppFirebase.retrive(false, reference, new CallbackFirebaseDataSnapshot() {
             @Override
             public void onCallback(DataSnapshot dataSnapshot) {
-                boolean isKeyExists = dataSnapshot.child(SuperVariables._AppFirebase.getCurrenctUserId()).hasChild(selectedUserKey);
+                boolean isKeyExists = dataSnapshot.hasChild(selectedUserKey);
                 if (isKeyExists) {
                     SuperVariables._AppFirebase.setProfileUserId(selectedUserKey);
                     AppFragmentAdapter.AppFragment(new Chat(), AppFragmentTag.TAG_CHAT, AppFragmentAdapter.FRAGMENT_REPLACE);
