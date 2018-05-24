@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Chat App</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="welcome_to_the_chat_app">Welcome to\nThe Chat App</string>
+    <string name="sign_in">Sign In</string>
+    <string name="new_status">New Status</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="status">Status</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="take_a_photo">Take A Photo</string>
+    <string name="choose_one_option">Choose One Option</string>
+    <string name="user_name">User Name</string>
+    <string name="user_status">User Status</string>
+    <string name="send_friend_request">Send Friend Request</string>
+    <string name="total_friends">Total Friends</string>
+    <string name="profile_view">Profile View</string>
+</resources>
