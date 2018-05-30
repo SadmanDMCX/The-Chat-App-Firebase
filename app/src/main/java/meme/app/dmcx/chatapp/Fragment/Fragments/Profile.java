@@ -105,44 +105,44 @@ public class Profile extends Fragment {
                     SuperVariables._AppFirebase.retrive(false, reference, new CallbackFirebaseDataSnapshot() {
                         @Override
                         public void onCallback(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.hasChild(profileUserId)) {
-                                String req_type = dataSnapshot.child(profileUserId).child(AppFirebaseVariables.request_type).getValue().toString();
-                                if (req_type != null) {
-                                    if (req_type.equals(AppFirebaseVariables.request_type_sent)) {
-                                        currentState = cs_request_sent;
-                                        ToggleButtons(true, "Cancel Friend Request", false, View.INVISIBLE);
-                                    } else if (req_type.equals(AppFirebaseVariables.request_type_received)) {
-                                        currentState = cs_request_received;
-                                        ToggleButtons(true, "Accept Friend Request", true, View.VISIBLE);
-                                    }
-                                } else {
-                                    currentState = cs_not_friends;
-                                    ToggleButtons(true, "Send Friend Request", false, View.INVISIBLE);
-                                }
-
-                                spotDialog.dismiss();
-                            } else {
-                                DatabaseReference reference = SuperVariables._AppFirebase.getFriendsDatabase().child(SuperVariables._AppFirebase.getCurrenctUserId());
-                                SuperVariables._AppFirebase.retrive(true, reference, new CallbackFirebaseDataSnapshot() {
-                                    @Override
-                                    public void onCallback(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.hasChild(profileUserId)) {
-                                            currentState = cs_friends;
-                                            ToggleButtons(true, "Unfriend", false, View.INVISIBLE);
-                                        } else {
-                                            currentState = cs_not_friends;
-                                            ToggleButtons(true, "Send Friend Request", false, View.INVISIBLE);
+                            if (dataSnapshot != null) {
+                                if (dataSnapshot.hasChild(profileUserId)) {
+                                    String req_type = dataSnapshot.child(profileUserId).child(AppFirebaseVariables.request_type).getValue().toString();
+                                    if (req_type != null) {
+                                        if (req_type.equals(AppFirebaseVariables.request_type_sent)) {
+                                            currentState = cs_request_sent;
+                                            ToggleButtons(true, "Cancel Friend Request", false, View.INVISIBLE);
+                                        } else if (req_type.equals(AppFirebaseVariables.request_type_received)) {
+                                            currentState = cs_request_received;
+                                            ToggleButtons(true, "Accept Friend Request", true, View.VISIBLE);
                                         }
-
-                                        spotDialog.dismiss();
+                                    } else {
+                                        currentState = cs_not_friends;
+                                        ToggleButtons(true, "Send Friend Request", false, View.INVISIBLE);
                                     }
-                                });
+
+                                    spotDialog.dismiss();
+                                } else {
+                                    DatabaseReference reference = SuperVariables._AppFirebase.getFriendsDatabase().child(SuperVariables._AppFirebase.getCurrenctUserId());
+                                    SuperVariables._AppFirebase.retrive(true, reference, new CallbackFirebaseDataSnapshot() {
+                                        @Override
+                                        public void onCallback(DataSnapshot dataSnapshot) {
+                                            if (dataSnapshot.hasChild(profileUserId)) {
+                                                currentState = cs_friends;
+                                                ToggleButtons(true, "Unfriend", false, View.INVISIBLE);
+                                            } else {
+                                                currentState = cs_not_friends;
+                                                ToggleButtons(true, "Send Friend Request", false, View.INVISIBLE);
+                                            }
+
+                                            spotDialog.dismiss();
+                                        }
+                                    });
+                                }
                             }
                         }
                     });
 
-                } else {
-                    Toast.makeText(SuperVariables._MainActivity, "Error! No Data Found!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -164,16 +164,18 @@ public class Search extends Fragment {
         SuperVariables._AppFirebase.retrive(false, reference, new CallbackFirebaseDataSnapshot() {
             @Override
             public void onCallback(DataSnapshot dataSnapshot) {
-                boolean isKeyExists = dataSnapshot.hasChild(selectedUserKey);
-                if (isKeyExists) {
-                    SuperVariables._AppFirebase.setProfileUserId(selectedUserKey);
-                    AppFragmentAdapter.AppFragment(new Chat(), AppFragmentTag.TAG_CHAT, AppFragmentAdapter.FRAGMENT_REPLACE);
-                    SuperMethods.ToggleToolbar(false, null, true);
-                    ChatMethods.CustomChatActionBar();
-                } else {
-                    SuperVariables._AppFirebase.setProfileUserId(selectedUserKey);
-                    AppFragmentAdapter.AppFragment(new Profile(), AppFragmentTag.TAG_PROFILE, AppFragmentAdapter.FRAGMENT_REPLACE);
-                    SuperMethods.ToggleToolbar(true, null, false);
+                if (dataSnapshot != null) {
+                    boolean isKeyExists = dataSnapshot.hasChild(selectedUserKey);
+                    if (isKeyExists) {
+                        SuperVariables._AppFirebase.setProfileUserId(selectedUserKey);
+                        AppFragmentAdapter.AppFragment(new Chat(), AppFragmentTag.TAG_CHAT, AppFragmentAdapter.FRAGMENT_REPLACE);
+                        SuperMethods.ToggleToolbar(false, null, true);
+                        ChatMethods.CustomChatActionBar();
+                    } else {
+                        SuperVariables._AppFirebase.setProfileUserId(selectedUserKey);
+                        AppFragmentAdapter.AppFragment(new Profile(), AppFragmentTag.TAG_PROFILE, AppFragmentAdapter.FRAGMENT_REPLACE);
+                        SuperMethods.ToggleToolbar(true, null, false);
+                    }
                 }
             }
         });
